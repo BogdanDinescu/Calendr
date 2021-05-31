@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Calendr</string>
+    <string name="calendar">Calendar</string>
+    <string name="agenda">Agenda</string>
 </resources>
