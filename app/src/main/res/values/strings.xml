@@ -2,4 +2,12 @@
     <string name="app_name">Calendr</string>
     <string name="calendar">Calendar</string>
     <string name="agenda">Agenda</string>
+    <string name="today">Today</string>
+    <string name="create">Create Event</string>
+    <string name="create2">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="name">Name</string>
+    <string name="date1">Date begin</string>
+    <string name="date2">Date end</string>
+    <string name="select_date">Select date</string>
 </resources>
