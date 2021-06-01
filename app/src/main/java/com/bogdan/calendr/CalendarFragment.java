@@ -3,6 +3,7 @@ package com.bogdan.calendr;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,11 @@ public class CalendarFragment extends Fragment {
     }
 
     public void createEvent() {
-        DialogFragment newFragment = new EventDialog();
-        newFragment.show(getActivity().getSupportFragmentManager(),"eventDialog");
+        Intent intent = new Intent(getActivity(), EditEvent.class);
+        //EditText editText = (EditText) findViewById(R.id.editText);
+        //String message = editText.getText().toString();
+        //intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
     }
 }
