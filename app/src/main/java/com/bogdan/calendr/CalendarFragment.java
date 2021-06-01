@@ -22,6 +22,7 @@ public class CalendarFragment extends Fragment {
     private CalendarView calendarView;
     private Button todayButton;
     private Button createButton;
+    int year, month, day;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +46,12 @@ public class CalendarFragment extends Fragment {
     }
 
     public void dateChange(int year, int month, int day) {
-
+        if (year == this.year && month == this.month && day == this.day) {
+            createEvent();
+        }
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 
     public void createEvent() {
