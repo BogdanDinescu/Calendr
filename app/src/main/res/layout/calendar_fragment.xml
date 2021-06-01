@@ -27,11 +27,24 @@
     </LinearLayout>
 
 
-    <CalendarView
+    <com.applandeo.materialcalendarview.CalendarView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/calendarView"
             app:layout_constraintTop_toBottomOf="@+id/buttonPanel"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:pagesColor="@color/black"
+            app:headerColor="@color/blue_400"
+            app:daysLabelsColor="@color/white"
+            app:disabledDaysLabelsColor="@color/grey"
+            app:abbreviationsBarColor="@color/blue_400"
+            app:abbreviationsLabelsColor="@color/white"
+            app:selectionColor="@color/orange"
+            app:todayLabelColor="@color/orange"
+            app:anotherMonthsDaysLabelsColor="@color/grey"
+            app:selectionLabelColor="@color/orange"
+            app:highlightedDaysLabelsColor="@color/orange"
+            app:headerLabelColor="@color/white"
+    />
 </androidx.constraintlayout.widget.ConstraintLayout>

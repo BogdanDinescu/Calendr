@@ -1,19 +1,16 @@
 package com.bogdan.calendr;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 
 import java.util.Date;
 
@@ -22,7 +19,6 @@ public class CalendarFragment extends Fragment {
     private CalendarView calendarView;
     private Button todayButton;
     private Button createButton;
-    int year, month, day;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,23 +32,18 @@ public class CalendarFragment extends Fragment {
         todayButton = view.findViewById(R.id.today_button);
         createButton = view.findViewById(R.id.create_button);
         todayButton.setOnClickListener(v -> todayClick());
-        calendarView.setOnDateChangeListener((v, year, month, day) -> dateChange(year, month, day));
         createButton.setOnClickListener(v -> createEvent());
     }
 
     public void todayClick() {
         Date now = new Date();
-        calendarView.setDate(now.getTime());
+        try {
+            calendarView.setDate(now);
+        } catch (OutOfDateRangeException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void dateChange(int year, int month, int day) {
-        if (year == this.year && month == this.month && day == this.day) {
-            createEvent();
-        }
-        this.year = year;
-        this.month = month;
-        this.day = day;
-    }
 
     public void createEvent() {
         Intent intent = new Intent(getActivity(), EditEvent.class);
