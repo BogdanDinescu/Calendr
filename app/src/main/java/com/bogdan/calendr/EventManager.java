@@ -28,7 +28,9 @@ public class EventManager {
 
         for (Event event:events) {
             evDay.setTime(event.getDate());
-            if (evDay.get(Calendar.YEAR) == curDay.get(Calendar.YEAR))
+            if (evDay.get(Calendar.YEAR) == curDay.get(Calendar.YEAR) &&
+                    evDay.get(Calendar.MONTH) == curDay.get(Calendar.MONTH) &&
+                    evDay.get(Calendar.DAY_OF_MONTH) == curDay.get(Calendar.DAY_OF_MONTH))
                 result.add(event);
         }
 

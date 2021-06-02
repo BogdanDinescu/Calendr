@@ -1,8 +1,6 @@
 package com.bogdan.calendr;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.applandeo.materialcalendarview.CalendarView;
@@ -10,12 +8,12 @@ import com.applandeo.materialcalendarview.EventDay;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private RecyclerView eventListView;
-    private EventAdapter eventAdapter;
     private EventManager eventManager;
 
     @Override
@@ -30,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDayClickListener(this::onDayClick);
         Date x = Calendar.getInstance().getTime();
         eventManager.addEvent("Cina",x,x,EventType.ONE_DAY,EventColor.BLUE);
-        eventManager.addEvent("Cina",x,x,EventType.ONE_DAY,EventColor.BLUE);
-        eventManager.addEvent("Cina",x,x,EventType.ONE_DAY,EventColor.BLUE);
-        eventManager.addEvent("Cina",x,x,EventType.ONE_DAY,EventColor.BLUE);
-        eventManager.addEvent("Cina",x,x,EventType.ONE_DAY,EventColor.BLUE);
-        eventAdapter = new EventAdapter(eventManager.getEvents(), this);
-        eventListView.setAdapter(eventAdapter);
+        showEventsInList(eventManager.getEvents());
+
     }
 
     private void onDayClick(EventDay eventDay) {
-        Toast.makeText(this,eventDay.getCalendar().getTime().toString(),Toast.LENGTH_SHORT).show();
+        showEventsInList(eventManager.getEventsByDay(eventDay.getCalendar().getTime()));
+    }
+
+    private void showEventsInList(List<Event> eventList) {
+        eventListView.setAdapter(new EventAdapter(eventList, this));
     }
 
 }

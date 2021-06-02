@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
-    List<Event> events;
-    Context context;
+    private List<Event> events;
+    private Context context;
 
     public EventAdapter(List<Event> events, Context context) {
         this.events = events;
