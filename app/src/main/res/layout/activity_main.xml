@@ -7,21 +7,24 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="0sp"
-                android:id="@+id/frameLayout"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/bottomNav"
-        />
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.applandeo.materialcalendarview.CalendarView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/bottomNav"
-                app:layout_constraintTop_toBottomOf="@id/frameLayout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:menu="@menu/bottom_nav_menu"
-                app:labelVisibilityMode="labeled"
+                android:id="@+id/calendarView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:pagesColor="@color/black"
+                app:headerColor="@color/blue_300"
+                app:daysLabelsColor="@color/white"
+                app:disabledDaysLabelsColor="@color/grey"
+                app:abbreviationsBarColor="@color/blue_300"
+                app:abbreviationsLabelsColor="@color/white"
+                app:selectionColor="@color/orange"
+                app:todayLabelColor="@color/orange"
+                app:anotherMonthsDaysLabelsColor="@color/grey"
+                app:selectionLabelColor="@color/orange"
+                app:highlightedDaysLabelsColor="@color/orange"
+                app:headerLabelColor="@color/white"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
