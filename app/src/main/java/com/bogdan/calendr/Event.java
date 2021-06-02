@@ -1,15 +1,16 @@
 package com.bogdan.calendr;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Event {
     private String name;
-    private Date date;
-    private Date end;
+    private Calendar date;
+    private Calendar end;
     private EventType type;
     private EventColor color;
 
-    public Event(String name, Date date, Date end, EventType type, EventColor color) {
+    public Event(String name, Calendar date, Calendar end, EventType type, EventColor color) {
         this.name = name;
         this.date = date;
         this.end = end;
@@ -25,19 +26,19 @@ public class Event {
         this.name = name;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
-    public Date getEnd() {
+    public Calendar getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(Calendar end) {
         this.end = end;
     }
 

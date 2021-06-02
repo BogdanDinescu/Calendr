@@ -8,7 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
     private List<Event> events;
@@ -42,7 +44,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
     public void onBindViewHolder(@NonNull eventHolder holder, int position) {
         final Event item = events.get(position);
         holder.name.setText(item.getName());
-        holder.date.setText(item.getDate().toString());
+        holder.date.setText(item.getDate().getTime().toString());
     }
 
     @Override

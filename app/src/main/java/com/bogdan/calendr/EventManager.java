@@ -1,8 +1,9 @@
 package com.bogdan.calendr;
 
+import com.applandeo.materialcalendarview.EventDay;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class EventManager {
@@ -12,7 +13,7 @@ public class EventManager {
         this.events = new ArrayList<>();
     }
 
-    public void addEvent(String name, Date date, Date end, EventType type, EventColor color) {
+    public void addEvent(String name, Calendar date, Calendar end, EventType type, EventColor color) {
         events.add(new Event(name, date, end, type, color));
     }
 
@@ -20,17 +21,29 @@ public class EventManager {
         return events;
     }
 
-    public List<Event> getEventsByDay(Date day) {
-        List<Event> result = new ArrayList<>();
-        Calendar curDay = Calendar.getInstance();
-        Calendar evDay = Calendar.getInstance();
-        curDay.setTime(day);
+    public List<EventDay> getEventDays() {
+        List<EventDay> result = new ArrayList<>();
+        for(Event event:events) {
+            result.add(new EventDay(event.getDate(), R.color.blue_600));
+        }
+        return result;
+    }
 
-        for (Event event:events) {
-            evDay.setTime(event.getDate());
-            if (evDay.get(Calendar.YEAR) == curDay.get(Calendar.YEAR) &&
-                    evDay.get(Calendar.MONTH) == curDay.get(Calendar.MONTH) &&
-                    evDay.get(Calendar.DAY_OF_MONTH) == curDay.get(Calendar.DAY_OF_MONTH))
+    public List<Calendar> getHighlightedDays() {
+        List<Calendar> result = new ArrayList<>();
+        for(Event event:events) {
+            result.add(event.getDate());
+        }
+        return result;
+    }
+
+    public List<Event> getEventsByDay(Calendar day) {
+        List<Event> result = new ArrayList<>();
+
+        for (Event event:events) { ;
+            if (day.get(Calendar.YEAR) == event.getDate().get(Calendar.YEAR) &&
+                    day.get(Calendar.MONTH) == event.getDate().get(Calendar.MONTH) &&
+                    day.get(Calendar.DAY_OF_MONTH) == event.getDate().get(Calendar.DAY_OF_MONTH))
                 result.add(event);
         }
 

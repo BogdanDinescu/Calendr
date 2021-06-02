@@ -26,14 +26,17 @@ public class MainActivity extends AppCompatActivity {
         eventManager = new EventManager();
 
         calendarView.setOnDayClickListener(this::onDayClick);
-        Date x = Calendar.getInstance().getTime();
-        eventManager.addEvent("Cina",x,x,EventType.ONE_DAY,EventColor.BLUE);
-        showEventsInList(eventManager.getEvents());
 
+        Calendar c =  Calendar.getInstance();
+        c.add(Calendar.DAY_OF_MONTH,1);
+        eventManager.addEvent("Cina", c, c,EventType.ONE_DAY,EventColor.BLUE);
+        calendarView.setEvents(eventManager.getEventDays());
+
+        showEventsInList(eventManager.getEvents());
     }
 
     private void onDayClick(EventDay eventDay) {
-        showEventsInList(eventManager.getEventsByDay(eventDay.getCalendar().getTime()));
+        showEventsInList(eventManager.getEventsByDay(eventDay.getCalendar()));
     }
 
     private void showEventsInList(List<Event> eventList) {
