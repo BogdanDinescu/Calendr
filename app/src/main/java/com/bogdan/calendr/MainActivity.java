@@ -2,6 +2,7 @@ package com.bogdan.calendr;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
@@ -29,10 +30,11 @@ public class MainActivity extends AppCompatActivity {
 
         Calendar c =  Calendar.getInstance();
         c.add(Calendar.DAY_OF_MONTH,1);
-        eventManager.addEvent("Cina", c, c,EventType.ONE_DAY,EventColor.BLUE);
+        eventManager.addEvent("Cina", c, c,EventType.ONE_DAY,EventColor.RED);
         calendarView.setEvents(eventManager.getEventDays());
 
         showEventsInList(eventManager.getEvents());
+
     }
 
     private void onDayClick(EventDay eventDay) {
