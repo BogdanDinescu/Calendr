@@ -1,8 +1,5 @@
 package com.bogdan.calendr;
 
-import android.content.Context;
-import androidx.core.content.ContextCompat;
-import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.EventDay;
 
 import java.util.ArrayList;
