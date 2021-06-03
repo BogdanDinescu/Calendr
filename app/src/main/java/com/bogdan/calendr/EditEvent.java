@@ -2,6 +2,7 @@ package com.bogdan.calendr;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,9 @@ public class EditEvent extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
+
+        Intent intent = getIntent();
+        Calendar dateFromIntent = (Calendar) intent.getExtras().get("INTENT_DATE");
 
         textName = findViewById(R.id.event_name);
         cancel = findViewById(R.id.cancel_button);
