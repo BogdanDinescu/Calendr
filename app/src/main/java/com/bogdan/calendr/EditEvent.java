@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.Calendar;
+
+import static java.lang.Integer.parseInt;
 
 public class EditEvent extends Activity {
 
     EditText textName;
-    Button cancel;
+    Button btn_cancel;
     Button btn_ok;
     Button btn_date1;
     Button btn_date2;
@@ -25,11 +29,8 @@ public class EditEvent extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_event);
 
-        Intent intent = getIntent();
-        Calendar dateFromIntent = (Calendar) intent.getExtras().get("INTENT_DATE");
-
         textName = findViewById(R.id.event_name);
-        cancel = findViewById(R.id.cancel_button);
+        btn_cancel = findViewById(R.id.cancel_button);
         btn_ok = findViewById(R.id.ok_button);
         btn_date1 = findViewById(R.id.btn_date1);
         btn_date2 = findViewById(R.id.btn_date2);
@@ -38,7 +39,13 @@ public class EditEvent extends Activity {
 
         btn_date1.setOnClickListener(v -> datePickerDialog(in_date));
         btn_date2.setOnClickListener(v -> datePickerDialog(end_date));
-        cancel.setOnClickListener(v -> finish());
+        btn_cancel.setOnClickListener(v -> finish());
+        btn_ok.setOnClickListener(v -> finishWithOk());
+
+        Intent intent = getIntent();
+        Calendar dateFromIntent = (Calendar) intent.getExtras().get("INTENT_DATE");
+        in_date.setText(getString(R.string.date,dateFromIntent.get(Calendar.DATE),dateFromIntent.get(Calendar.MONTH),dateFromIntent.get(Calendar.YEAR)));
+        end_date.setText(getString(R.string.date,dateFromIntent.get(Calendar.DATE),dateFromIntent.get(Calendar.MONTH),dateFromIntent.get(Calendar.YEAR)));
     }
 
     private void datePickerDialog(EditText editText) {
@@ -53,4 +60,37 @@ public class EditEvent extends Activity {
         datePickerDialog.show();
     }
 
+    private Calendar getCalendarFromString(String string) throws RuntimeException{
+        if (string == null || string.length() == 0) throw new RuntimeException();
+
+        String[] date = string.split("/");
+        if (date.length != 3) throw new RuntimeException();
+
+        Calendar c = Calendar.getInstance();
+        c.set(
+                parseInt(date[2].trim()),
+                parseInt(date[1].trim()),
+                parseInt(date[0].trim()));
+        return c;
+    }
+
+    private Event eventFromForm() throws RuntimeException {
+        if(textName.getText().toString().length() == 0) throw new RuntimeException();
+
+        Calendar c1 = getCalendarFromString(in_date.getText().toString());
+        Calendar c2 = getCalendarFromString(end_date.getText().toString());
+        return new Event(textName.getText().toString(), c1, c2, EventType.ONE_DAY, EventColor.BLUE);
+    }
+
+    private void finishWithOk() {
+        try {
+            Event event = eventFromForm();
+            Intent intent = new Intent();
+            intent.putExtra("INTENT_RESPONSE", event);
+            setResult(RESULT_OK, intent);
+            finish();
+        } catch (RuntimeException e) {
+            Toast.makeText(this,"Fields not completed correctly",Toast.LENGTH_SHORT).show();
+        }
+    }
 }

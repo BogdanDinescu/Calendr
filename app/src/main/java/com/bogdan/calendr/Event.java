@@ -1,9 +1,12 @@
 package com.bogdan.calendr;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Calendar;
 import java.util.Date;
 
-public class Event {
+public class Event implements Parcelable {
     private String name;
     private Calendar date;
     private Calendar end;
@@ -17,6 +20,30 @@ public class Event {
         this.type = type;
         this.color = color;
     }
+
+    protected Event(Parcel in) {
+        name = in.readString();
+        Calendar c1 = Calendar.getInstance();
+        c1.setTimeInMillis(in.readLong());
+        date = c1;
+        Calendar c2 = Calendar.getInstance();
+        c2.setTimeInMillis(in.readLong());
+        end = c2;
+        type = (EventType) in.readSerializable();
+        color = (EventColor) in.readSerializable();
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -56,5 +83,19 @@ public class Event {
 
     public void setColor(EventColor color) {
         this.color = color;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeLong(date.getTimeInMillis());
+        dest.writeLong(end.getTimeInMillis());
+        dest.writeSerializable(type);
+        dest.writeSerializable(color);
     }
 }

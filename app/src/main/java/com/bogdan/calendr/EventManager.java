@@ -17,6 +17,10 @@ public class EventManager {
         events.add(new Event(name, date, end, type, color));
     }
 
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
     public List<Event> getEvents() {
         return events;
     }
