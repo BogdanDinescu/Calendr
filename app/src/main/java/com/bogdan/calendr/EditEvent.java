@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
@@ -23,6 +25,7 @@ public class EditEvent extends Activity {
     Button btn_date2;
     EditText in_date;
     EditText end_date;
+    RadioGroup color_selector;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class EditEvent extends Activity {
         btn_date2 = findViewById(R.id.btn_date2);
         in_date = findViewById(R.id.in_date);
         end_date = findViewById(R.id.end_date);
+        color_selector = findViewById(R.id.color_selector);
 
         btn_date1.setOnClickListener(v -> datePickerDialog(in_date));
         btn_date2.setOnClickListener(v -> datePickerDialog(end_date));
@@ -60,7 +64,7 @@ public class EditEvent extends Activity {
         datePickerDialog.show();
     }
 
-    private Calendar getCalendarFromString(String string) throws RuntimeException{
+    private Calendar getCalendarFromString(String string) throws RuntimeException {
         if (string == null || string.length() == 0) throw new RuntimeException();
 
         String[] date = string.split("/");
@@ -79,7 +83,12 @@ public class EditEvent extends Activity {
 
         Calendar c1 = getCalendarFromString(in_date.getText().toString());
         Calendar c2 = getCalendarFromString(end_date.getText().toString());
-        return new Event(textName.getText().toString(), c1, c2, EventType.ONE_DAY, EventColor.BLUE);
+
+        int radioId = color_selector.getCheckedRadioButtonId();
+        View radioButton = color_selector.findViewById(radioId);
+        int id = color_selector.indexOfChild(radioButton);
+
+        return new Event(textName.getText().toString(), c1, c2, EventType.ONE_DAY, EventColor.values()[id]);
     }
 
     private void finishWithOk() {
