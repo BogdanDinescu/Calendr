@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
-        eventManager = new EventManager();
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
+        eventManager = new EventManager(db);
+
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
@@ -49,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Calendar c =  Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH,1);
-        eventManager.addEvent("Cina", c, c,EventType.ONE_DAY,EventColor.RED);
+        List<Calendar> list = new ArrayList<>();
+        list.add(c);
+        calendarView.setSelectedDates(list);
+
         displayEventsOnCalendarView();
-
         showEventsInList(eventManager.getEvents());
-
     }
 
     private void onDayClick(EventDay eventDay) {
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showEventsInList(List<Event> eventList) {
-        eventListView.setAdapter(new EventAdapter(eventList, this));
+        eventListView.setAdapter(new EventAdapter(eventList, eventManager));
     }
 
 }

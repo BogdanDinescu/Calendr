@@ -2,11 +2,15 @@ package com.bogdan.calendr;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
-import java.util.Date;
 
+@Entity
 public class Event implements Parcelable {
+    @PrimaryKey(autoGenerate = true)
+    private int uid;
     private String name;
     private Calendar date;
     private Calendar end;
@@ -44,6 +48,14 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
 
     public String getName() {
         return name;

@@ -1,34 +1,36 @@
 package com.bogdan.calendr;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
     private List<Event> events;
-    private Context context;
+    private EventManager eventManager;
 
-    public EventAdapter(List<Event> events, Context context) {
+    public EventAdapter(List<Event> events, EventManager eventManager) {
         this.events = events;
-        this.context = context;
+        this.eventManager = eventManager;
     }
 
     public static class eventHolder extends RecyclerView.ViewHolder {
 
         TextView name;
         TextView date;
+        ImageView edit;
+        ImageView delete;
         public eventHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.event_holder_name);
             date = itemView.findViewById(R.id.event_holder_date);
+            edit = itemView.findViewById(R.id.btn_edit);
+            delete = itemView.findViewById(R.id.btn_delete);
         }
     }
 
@@ -45,6 +47,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         final Event item = events.get(position);
         holder.name.setText(item.getName());
         holder.date.setText(item.getDate().getTime().toString());
+        holder.edit.setOnClickListener(v -> {});
+        holder.delete.setOnClickListener(v -> {});
     }
 
     @Override

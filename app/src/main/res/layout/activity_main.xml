@@ -23,10 +23,8 @@
                 app:disabledDaysLabelsColor="@color/grey"
                 app:abbreviationsBarColor="@color/blue_300"
                 app:abbreviationsLabelsColor="@color/white"
-                app:selectionColor="@color/orange"
                 app:todayLabelColor="@color/orange"
                 app:anotherMonthsDaysLabelsColor="@color/grey"
-                app:selectionLabelColor="@color/orange"
                 app:highlightedDaysLabelsColor="@color/orange"
                 app:headerLabelColor="@color/white"
         />
