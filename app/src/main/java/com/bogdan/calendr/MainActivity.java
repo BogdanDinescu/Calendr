@@ -23,12 +23,10 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final Calendar INTENT_DATE = null;
     private CalendarView calendarView;
     private RecyclerView eventListView;
     private ImageView addButton;
-    private ActivityResultLauncher<Intent> startForResult;
-    private AppDatabase db;
+    public static AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
-        startForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                MainActivity.this.onActivityResult(result);
-            }
-        });
 
         Calendar c =  Calendar.getInstance();
         List<Calendar> list = new ArrayList<>();
@@ -67,30 +59,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void onActivityResult(ActivityResult result) {
-        if (result.getResultCode() == Activity.RESULT_OK) {
-            if (result.getData() != null) {
-                Event event = result.getData().getParcelableExtra("INTENT_RESPONSE");
-                Executor executor = Executors.newSingleThreadExecutor();
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        db.eventDao().insert(event);
-                    }
-                });
-                Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     private void openAddEventActivity() {
         Intent intent = new Intent(this, EditEvent.class);
-        intent.putExtra("INTENT_DATE",calendarView.getFirstSelectedDate());
-        startForResult.launch(intent);
+        intent.putExtra("INTENT_EVENT", new Event(0,"",calendarView.getFirstSelectedDate(),EventType.ONE_DAY,EventColor.BLUE));
+        startActivity(intent);
     }
 
     private void showEventsInList(List<Event> eventList) {
-        eventListView.setAdapter(new EventAdapter(eventList));
+        eventListView.setAdapter(new EventAdapter(eventList, db));
     }
 
 }

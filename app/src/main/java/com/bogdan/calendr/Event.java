@@ -13,26 +13,23 @@ public class Event implements Parcelable {
     private int uid;
     private String name;
     private Calendar date;
-    private Calendar end;
     private EventType type;
     private EventColor color;
 
-    public Event(String name, Calendar date, Calendar end, EventType type, EventColor color) {
+    public Event(int uid, String name, Calendar date, EventType type, EventColor color) {
+        this.uid = uid;
         this.name = name;
         this.date = date;
-        this.end = end;
         this.type = type;
         this.color = color;
     }
 
     protected Event(Parcel in) {
+        uid = in.readInt();
         name = in.readString();
         Calendar c1 = Calendar.getInstance();
         c1.setTimeInMillis(in.readLong());
         date = c1;
-        Calendar c2 = Calendar.getInstance();
-        c2.setTimeInMillis(in.readLong());
-        end = c2;
         type = (EventType) in.readSerializable();
         color = (EventColor) in.readSerializable();
     }
@@ -73,14 +70,6 @@ public class Event implements Parcelable {
         this.date = date;
     }
 
-    public Calendar getEnd() {
-        return end;
-    }
-
-    public void setEnd(Calendar end) {
-        this.end = end;
-    }
-
     public EventType getType() {
         return type;
     }
@@ -104,9 +93,9 @@ public class Event implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(uid);
         dest.writeString(name);
         dest.writeLong(date.getTimeInMillis());
-        dest.writeLong(end.getTimeInMillis());
         dest.writeSerializable(type);
         dest.writeSerializable(color);
     }
