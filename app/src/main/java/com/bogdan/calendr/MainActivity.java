@@ -3,7 +3,6 @@ package com.bogdan.calendr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(c);
         calendarView.setSelectedDates(list);
 
-        db.eventDao().getAll().observeForever(events -> calendarView.setEvents(EventManager.getEventDays(events)));
+        db.eventDao().getAll().observeForever(events -> calendarView.setEvents(getEventDays(events)));
 
         db.eventDao().getAll().observe(this, this::showEventsInList);
 
@@ -60,4 +59,16 @@ public class MainActivity extends AppCompatActivity {
         eventListView.setAdapter(new EventAdapter(eventList, db));
     }
 
+    private List<EventDay> getEventDays(List<Event> events) {
+        List<EventDay> result = new ArrayList<>();
+        for(Event event:events) {
+            result.add(new EventDay(event.getDate(), eventColorToColor(event.getColor())));
+        }
+        return result;
+    }
+
+    private int eventColorToColor(EventColor eventColor) {
+        int[] colors = {R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue_300, R.color.purple};
+        return colors[eventColor.ordinal()];
+    }
 }
