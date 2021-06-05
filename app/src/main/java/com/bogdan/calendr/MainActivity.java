@@ -1,14 +1,9 @@
 package com.bogdan.calendr;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -18,8 +13,6 @@ import com.applandeo.materialcalendarview.EventDay;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,15 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         db.eventDao().getAll().observeForever(events -> calendarView.setEvents(EventManager.getEventDays(events)));
 
-        db.eventDao().getAll().observe(this, events -> showEventsInList(events));
+        db.eventDao().getAll().observe(this, this::showEventsInList);
 
     }
 
     private void onDayClick(EventDay eventDay) {
-        db.eventDao().getEventsByDay(eventDay.getCalendar()).observe(this, events -> {
-            Toast.makeText(getApplication(),String.valueOf(events.size()),Toast.LENGTH_SHORT).show();
-            showEventsInList(events);
-        });
+        db.eventDao().getEventsByDay(eventDay.getCalendar()).observe(this, this::showEventsInList);
     }
 
 

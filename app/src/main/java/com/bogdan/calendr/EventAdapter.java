@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +17,7 @@ import java.util.concurrent.Executors;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
     private List<Event> events;
-    private AppDatabase db;
+    private final AppDatabase db;
 
     public EventAdapter(List<Event> events, AppDatabase db) {
         this.events = events;

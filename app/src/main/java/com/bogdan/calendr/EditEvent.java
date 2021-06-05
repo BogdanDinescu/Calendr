@@ -47,6 +47,7 @@ public class EditEvent extends Activity {
         eventFromIntent = (Event) intent.getExtras().get("INTENT_EVENT");
         in_date.setText(getString(R.string.date,eventFromIntent.getDate().get(Calendar.DATE),eventFromIntent.getDate().get(Calendar.MONTH),eventFromIntent.getDate().get(Calendar.YEAR)));
         textName.setText(eventFromIntent.getName());
+        color_selector.check(color_selector.getChildAt(eventFromIntent.getColor().ordinal()).getId());
     }
 
     private void datePickerDialog(EditText editText) {
@@ -68,11 +69,11 @@ public class EditEvent extends Activity {
         if (date.length != 3) throw new RuntimeException();
 
         Calendar c = Calendar.getInstance();
+        c.clear();
         c.set(
                 parseInt(date[2].trim()),
                 parseInt(date[1].trim()),
-                parseInt(date[0].trim()),
-                0,0,0
+                parseInt(date[0].trim())
         );
         return c;
     }
