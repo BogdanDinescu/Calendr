@@ -10,7 +10,6 @@
                 android:src="@drawable/baseline_today_black_48"
                 android:tint="@color/white"
                 android:gravity="center"/>
-
     </item>
 
 </layer-list>

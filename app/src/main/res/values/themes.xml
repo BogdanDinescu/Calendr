@@ -11,12 +11,9 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
     </style>
-    <style name="Theme.Launcher" parent="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge">
+    <style name="Theme.Launcher" parent="Theme.Calendr">
         <item name="android:windowBackground">@drawable/launch_screen</item>
-        <item name="colorPrimaryDark">@android:color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
-
     </style>
 </resources>
