@@ -8,9 +8,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -20,15 +18,17 @@ import com.applandeo.materialcalendarview.EventDay;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final Calendar INTENT_DATE = null;
     private CalendarView calendarView;
     private RecyclerView eventListView;
-    private EventManager eventManager;
     private ImageView addButton;
     private ActivityResultLauncher<Intent> startForResult;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
-        eventManager = new EventManager(db);
-
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
@@ -56,27 +54,33 @@ public class MainActivity extends AppCompatActivity {
         list.add(c);
         calendarView.setSelectedDates(list);
 
-        displayEventsOnCalendarView();
-        showEventsInList(eventManager.getEvents());
+        db.eventDao().getAll().observeForever(events -> calendarView.setEvents(EventManager.getEventDays(events)));
+
+        db.eventDao().getAll().observe(this, events -> showEventsInList(events));
+
     }
 
     private void onDayClick(EventDay eventDay) {
-        showEventsInList(eventManager.getEventsByDay(eventDay.getCalendar()));
+        db.eventDao().getEventsByDay(eventDay.getCalendar()).observe(this, events -> {
+            Toast.makeText(getApplication(),String.valueOf(events.size()),Toast.LENGTH_SHORT).show();
+            showEventsInList(events);
+        });
     }
 
     private void onActivityResult(ActivityResult result) {
         if (result.getResultCode() == Activity.RESULT_OK) {
             if (result.getData() != null) {
                 Event event = result.getData().getParcelableExtra("INTENT_RESPONSE");
-                eventManager.addEvent(event);
-                displayEventsOnCalendarView();
+                Executor executor = Executors.newSingleThreadExecutor();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        db.eventDao().insert(event);
+                    }
+                });
                 Toast.makeText(getApplicationContext(), "Added successfully", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private void displayEventsOnCalendarView() {
-        calendarView.setEvents(eventManager.getEventDays());
     }
 
     private void openAddEventActivity() {
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showEventsInList(List<Event> eventList) {
-        eventListView.setAdapter(new EventAdapter(eventList, eventManager));
+        eventListView.setAdapter(new EventAdapter(eventList));
     }
 
 }

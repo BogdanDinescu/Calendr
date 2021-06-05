@@ -12,11 +12,9 @@ import java.util.List;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
     private List<Event> events;
-    private EventManager eventManager;
 
-    public EventAdapter(List<Event> events, EventManager eventManager) {
+    public EventAdapter(List<Event> events) {
         this.events = events;
-        this.eventManager = eventManager;
     }
 
     public static class eventHolder extends RecyclerView.ViewHolder {

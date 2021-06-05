@@ -11,7 +11,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 
-import java.util.Arrays;
 import java.util.Calendar;
 
 import static java.lang.Integer.parseInt;
@@ -74,7 +73,9 @@ public class EditEvent extends Activity {
         c.set(
                 parseInt(date[2].trim()),
                 parseInt(date[1].trim()),
-                parseInt(date[0].trim()));
+                parseInt(date[0].trim()),
+                0,0,0
+        );
         return c;
     }
 
