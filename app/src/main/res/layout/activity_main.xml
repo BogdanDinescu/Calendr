@@ -28,7 +28,13 @@
                 app:highlightedDaysLabelsColor="@color/orange"
                 app:headerLabelColor="@color/white"
         />
-
+        <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/loading"
+                android:layout_margin="5dp"
+        />
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

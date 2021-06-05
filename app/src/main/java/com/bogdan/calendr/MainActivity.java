@@ -2,7 +2,9 @@ package com.bogdan.calendr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private RecyclerView eventListView;
     private ImageView addButton;
+    private ProgressBar loading;
     public static AppDatabase db;
 
     @Override
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
+        loading = findViewById(R.id.loading);
+        loading.setVisibility(View.VISIBLE);
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
 
         calendarView.setOnDayClickListener(this::onDayClick);
@@ -48,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         db.eventDao().getEventsByDay(eventDay.getCalendar()).observe(this, this::showEventsInList);
     }
 
-
     private void openAddEventActivity() {
         Intent intent = new Intent(this, EditEvent.class);
         intent.putExtra("INTENT_EVENT", new Event(0,"",calendarView.getFirstSelectedDate(),EventType.ONE_DAY,EventColor.BLUE));
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showEventsInList(List<Event> eventList) {
+        loading.setVisibility(View.GONE);
         eventListView.setAdapter(new EventAdapter(eventList, db));
     }
 
