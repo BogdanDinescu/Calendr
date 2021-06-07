@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    private int eventColorToColor(EventColor eventColor) {
+    public static int eventColorToColor(EventColor eventColor) {
         int[] colors = {R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue_300, R.color.purple};
         return colors[eventColor.ordinal()];
     }

@@ -1,5 +1,6 @@
 package com.bogdan.calendr;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -18,6 +22,7 @@ import java.util.concurrent.Executors;
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
     private List<Event> events;
     private final AppDatabase db;
+    private Context context;
 
     public EventAdapter(List<Event> events, AppDatabase db) {
         this.events = events;
@@ -25,7 +30,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
     }
 
     public static class eventHolder extends RecyclerView.ViewHolder {
-
         TextView name;
         TextView date;
         ImageView edit;
@@ -44,6 +48,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
     public eventHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View eventView = inflater.inflate(R.layout.event, parent, false);
+        context = parent.getContext();
         return new eventHolder(eventView);
     }
 
@@ -51,10 +56,11 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
     public void onBindViewHolder(@NonNull eventHolder holder, int position) {
         final Event item = events.get(position);
         holder.name.setText(item.getName());
-        holder.date.setText(item.getDate().getTime().toString());
+        holder.name.setTextColor(ContextCompat.getColor(context,MainActivity.eventColorToColor(item.getColor())));
+        holder.date.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG).format(item.getDate().getTime()));
         holder.edit.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), EditEventActivity.class);
-            intent.putExtra("INTENT_EVENT", events.get(position));
+            intent.putExtra("INTENT_EVENT", item);
             v.getContext().startActivity(intent);
         });
         holder.delete.setOnClickListener(v -> {
@@ -67,7 +73,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
                             executor.execute(new Runnable() {
                                 @Override
                                 public void run() {
-                                    db.eventDao().delete(events.get(position));
+                                    db.eventDao().delete(item);
                                 }
                             });
                         }})
@@ -75,10 +81,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         });
     }
 
-    private void delete_click(View view) {
-
-
-    }
     @Override
     public int getItemCount() {
         return events.size();
