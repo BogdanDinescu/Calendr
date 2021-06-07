@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView eventListView;
     private ImageView addButton;
     private ProgressBar loading;
+    private TextView noEvent;
     public static AppDatabase db;
 
     @Override
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
         loading = findViewById(R.id.loading);
+        noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
 
@@ -62,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void showEventsInList(List<Event> eventList) {
         loading.setVisibility(View.GONE);
+        if (eventList.size() == 0) {
+            noEvent.setVisibility(View.VISIBLE);
+        } else {
+            noEvent.setVisibility(View.GONE);
+        }
         eventListView.setAdapter(new EventAdapter(eventList, db));
     }
 
