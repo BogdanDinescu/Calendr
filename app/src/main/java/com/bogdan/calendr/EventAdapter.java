@@ -20,7 +20,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder> {
-    private List<Event> events;
+    private final List<Event> events;
     private final AppDatabase db;
     private Context context;
 
@@ -57,7 +57,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         final Event item = events.get(position);
         holder.name.setText(item.getName());
         holder.name.setTextColor(ContextCompat.getColor(context,MainActivity.eventColorToColor(item.getColor())));
-        holder.date.setText(SimpleDateFormat.getDateInstance(DateFormat.LONG).format(item.getDate().getTime()));
+        holder.date.setText(SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(item.getDate().getTime()));
         holder.edit.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), EditEventActivity.class);
             intent.putExtra("INTENT_EVENT", item);

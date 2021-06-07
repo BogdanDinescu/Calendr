@@ -45,7 +45,7 @@ public class EditEventActivity extends Activity {
 
         Intent intent = getIntent();
         eventFromIntent = (Event) intent.getExtras().get("INTENT_EVENT");
-        date.setText(getString(R.string.date,eventFromIntent.getDate().get(Calendar.DATE),eventFromIntent.getDate().get(Calendar.MONTH),eventFromIntent.getDate().get(Calendar.YEAR)));
+        date.setText(getString(R.string.date,eventFromIntent.getDate().get(Calendar.DATE),eventFromIntent.getDate().get(Calendar.MONTH) + 1,eventFromIntent.getDate().get(Calendar.YEAR)));
         textName.setText(eventFromIntent.getName());
         color_selector.check(color_selector.getChildAt(eventFromIntent.getColor().ordinal()).getId());
     }
@@ -57,7 +57,7 @@ public class EditEventActivity extends Activity {
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                (view1, year, month, day) -> editText.setText(getString(R.string.date , day, month, year)),
+                (view1, year, month, day) -> editText.setText(getString(R.string.date , day, month + 1, year)),
                 mYear, mMonth, mDay);
         datePickerDialog.show();
     }
@@ -72,7 +72,7 @@ public class EditEventActivity extends Activity {
         c.clear();
         c.set(
                 parseInt(date[2].trim()),
-                parseInt(date[1].trim()),
+                parseInt(date[1].trim()) - 1,
                 parseInt(date[0].trim())
         );
         return c;

@@ -41,11 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
-
-        Calendar c =  Calendar.getInstance();
-        List<Calendar> list = new ArrayList<>();
-        list.add(c);
-        calendarView.setSelectedDates(list);
+        setTodayDateAsSelected();
 
         db.eventDao().getAll().observeForever(events -> calendarView.setEvents(getEventDays(events)));
 
@@ -71,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             noEvent.setVisibility(View.GONE);
         }
         eventListView.setAdapter(new EventAdapter(eventList, db));
+    }
+
+    private void setTodayDateAsSelected() {
+        Calendar c =  Calendar.getInstance();
+        List<Calendar> list = new ArrayList<>();
+        list.add(c);
+        calendarView.setSelectedDates(list);
     }
 
     private List<EventDay> getEventDays(List<Event> events) {
