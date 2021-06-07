@@ -8,7 +8,7 @@ import java.util.List;
 
 @Dao
 public interface EventDao {
-    @Query("SELECT * FROM event")
+    @Query("SELECT * FROM event ORDER BY date")
     LiveData<List<Event>> getAll();
 
     @Query("SELECT * FROM event WHERE date = :day")
