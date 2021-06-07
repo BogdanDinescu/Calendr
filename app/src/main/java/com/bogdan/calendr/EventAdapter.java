@@ -53,7 +53,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         holder.name.setText(item.getName());
         holder.date.setText(item.getDate().getTime().toString());
         holder.edit.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), EditEvent.class);
+            Intent intent = new Intent(v.getContext(), EditEventActivity.class);
             intent.putExtra("INTENT_EVENT", events.get(position));
             v.getContext().startActivity(intent);
         });
@@ -75,6 +75,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         });
     }
 
+    private void delete_click(View view) {
+
+
+    }
     @Override
     public int getItemCount() {
         return events.size();

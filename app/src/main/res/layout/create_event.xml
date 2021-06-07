@@ -5,7 +5,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        android:padding="30dp">
+        android:padding="30dp"
+        android:fitsSystemWindows="true">
 
     <EditText
             android:layout_width="match_parent"
@@ -21,7 +22,7 @@
     <EditText
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:id="@+id/in_date"
+            android:id="@+id/date"
             android:hint="@string/date1"
             android:inputType="date"
             android:autofillHints="@string/select_date"
@@ -34,16 +35,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_date"
-            android:id="@+id/btn_date1"
+            android:id="@+id/btn_date"
             app:layout_constraintTop_toBottomOf="@id/event_name"
-            app:layout_constraintStart_toEndOf="@id/in_date"
+            app:layout_constraintStart_toEndOf="@id/date"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue_300"
     />
     <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/color_selector"
-            app:layout_constraintTop_toBottomOf="@id/in_date"
+            app:layout_constraintTop_toBottomOf="@id/date"
             app:layout_constraintStart_toStartOf="parent"
             android:orientation="horizontal"
             android:gravity="center"
@@ -81,14 +84,18 @@
             android:id="@+id/cancel_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue_300"
     />
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create2"
+            android:text="@string/ok"
             android:id="@+id/ok_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue_300"
     />
 
 

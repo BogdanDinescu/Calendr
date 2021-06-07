@@ -16,8 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".EditEvent">
-
+        <activity
+                android:name=".EditEventActivity"
+                android:windowSoftInputMode="adjustResize"
+                android:theme="@style/Theme.Calendr">
         </activity>
     </application>
 

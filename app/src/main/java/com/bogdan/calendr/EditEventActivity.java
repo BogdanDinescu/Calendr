@@ -17,13 +17,13 @@ import java.util.concurrent.Executors;
 
 import static java.lang.Integer.parseInt;
 
-public class EditEvent extends Activity {
+public class EditEventActivity extends Activity {
 
     private EditText textName;
     private Button btn_cancel;
     private Button btn_ok;
-    private Button btn_date1;
-    private EditText in_date;
+    private Button btn_date;
+    private EditText date;
     private RadioGroup color_selector;
     private Event eventFromIntent;
 
@@ -35,17 +35,17 @@ public class EditEvent extends Activity {
         textName = findViewById(R.id.event_name);
         btn_cancel = findViewById(R.id.cancel_button);
         btn_ok = findViewById(R.id.ok_button);
-        btn_date1 = findViewById(R.id.btn_date1);
-        in_date = findViewById(R.id.in_date);
+        btn_date = findViewById(R.id.btn_date);
+        date = findViewById(R.id.date);
         color_selector = findViewById(R.id.color_selector);
 
-        btn_date1.setOnClickListener(v -> datePickerDialog(in_date));
+        btn_date.setOnClickListener(v -> datePickerDialog(date));
         btn_cancel.setOnClickListener(v -> finish());
         btn_ok.setOnClickListener(v -> finishWithOk());
 
         Intent intent = getIntent();
         eventFromIntent = (Event) intent.getExtras().get("INTENT_EVENT");
-        in_date.setText(getString(R.string.date,eventFromIntent.getDate().get(Calendar.DATE),eventFromIntent.getDate().get(Calendar.MONTH),eventFromIntent.getDate().get(Calendar.YEAR)));
+        date.setText(getString(R.string.date,eventFromIntent.getDate().get(Calendar.DATE),eventFromIntent.getDate().get(Calendar.MONTH),eventFromIntent.getDate().get(Calendar.YEAR)));
         textName.setText(eventFromIntent.getName());
         color_selector.check(color_selector.getChildAt(eventFromIntent.getColor().ordinal()).getId());
     }
@@ -81,7 +81,7 @@ public class EditEvent extends Activity {
     private Event eventFromForm() throws RuntimeException {
         if(textName.getText().toString().length() == 0) throw new RuntimeException();
 
-        Calendar c1 = getCalendarFromString(in_date.getText().toString());
+        Calendar c1 = getCalendarFromString(date.getText().toString());
 
         int radioId = color_selector.getCheckedRadioButtonId();
         View radioButton = color_selector.findViewById(radioId);
