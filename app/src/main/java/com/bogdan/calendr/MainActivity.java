@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         loading = findViewById(R.id.loading);
         noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, AppDatabase.name).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build();
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());

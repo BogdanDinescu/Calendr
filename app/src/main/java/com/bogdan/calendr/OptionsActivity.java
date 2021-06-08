@@ -45,7 +45,7 @@ public class OptionsActivity extends AppCompatActivity {
                 assert result.getData() != null;
                 try {
                     OutputStream out = getContentResolver().openOutputStream(result.getData().getData());
-                    File database = getApplicationContext().getDatabasePath("database");
+                    File database = getApplicationContext().getDatabasePath(AppDatabase.name);
                     if (database.exists()) {
                         IOUtils.copy(database.toURI().toURL(),out);
                     }
@@ -61,7 +61,7 @@ public class OptionsActivity extends AppCompatActivity {
                 assert result.getData() != null;
                 try {
                     InputStream in = getContentResolver().openInputStream(result.getData().getData());
-                    File database = getApplicationContext().getDatabasePath("database");
+                    File database = getApplicationContext().getDatabasePath(AppDatabase.name);
                     FileOutputStream out = new FileOutputStream(database);
                     IOUtils.copy(in,out);
                     in.close();

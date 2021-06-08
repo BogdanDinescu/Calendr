@@ -8,5 +8,6 @@ import androidx.room.TypeConverters;
 @TypeConverters({CalendarConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract EventDao eventDao();
+    public static String name = "database";
 }
 
