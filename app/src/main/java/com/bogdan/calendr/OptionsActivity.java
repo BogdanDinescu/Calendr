@@ -2,9 +2,7 @@ package com.bogdan.calendr;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.widget.Button;
-import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -12,8 +10,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import org.apache.commons.io.IOUtils;
 
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -46,11 +48,15 @@ public class OptionsActivity extends AppCompatActivity {
                 try {
                     OutputStream out = getContentResolver().openOutputStream(result.getData().getData());
                     File database = getApplicationContext().getDatabasePath(AppDatabase.name);
+                    Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+                    SecretKey secretKey = new SecretKeySpec("nZr4u7x!A%D*G-Ka".getBytes(StandardCharsets.US_ASCII),"AES");
+                    cipher.init(Cipher.ENCRYPT_MODE,secretKey);
+                    CipherOutputStream cipherOut = new CipherOutputStream(out, cipher);
                     if (database.exists()) {
-                        IOUtils.copy(database.toURI().toURL(),out);
+                        IOUtils.copy(database.toURI().toURL(),cipherOut);
                     }
                     out.close();
-                } catch (IOException e) {
+                } catch (IOException | NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException e) {
                     e.printStackTrace();
                 }
             }
@@ -63,9 +69,13 @@ public class OptionsActivity extends AppCompatActivity {
                     InputStream in = getContentResolver().openInputStream(result.getData().getData());
                     File database = getApplicationContext().getDatabasePath(AppDatabase.name);
                     FileOutputStream out = new FileOutputStream(database);
-                    IOUtils.copy(in,out);
+                    Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+                    SecretKey secretKey = new SecretKeySpec("nZr4u7x!A%D*G-Ka".getBytes(StandardCharsets.US_ASCII),"AES");
+                    cipher.init(Cipher.DECRYPT_MODE,secretKey);
+                    CipherInputStream cipherIn = new CipherInputStream(in, cipher);
+                    IOUtils.copy(cipherIn,out);
                     in.close();
-                } catch (IOException e) {
+                } catch (IOException | NoSuchPaddingException | InvalidKeyException | NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
             }
