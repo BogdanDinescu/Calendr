@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         loading = findViewById(R.id.loading);
         noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database").setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build();
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());

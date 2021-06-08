@@ -2,6 +2,7 @@ package com.bogdan.calendr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
@@ -9,8 +10,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-import androidx.room.RoomDatabase;
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -45,8 +45,10 @@ public class OptionsActivity extends AppCompatActivity {
                 assert result.getData() != null;
                 try {
                     OutputStream out = getContentResolver().openOutputStream(result.getData().getData());
-                    String s = "Hello";
-                    out.write(s.getBytes(StandardCharsets.UTF_8));
+                    File database = getApplicationContext().getDatabasePath("database");
+                    if (database.exists()) {
+                        IOUtils.copy(database.toURI().toURL(),out);
+                    }
                     out.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -56,21 +58,13 @@ public class OptionsActivity extends AppCompatActivity {
         readIntent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
+                assert result.getData() != null;
                 try {
-                    assert result.getData() != null;
                     InputStream in = getContentResolver().openInputStream(result.getData().getData());
-                    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-                    int nRead;
-                    byte[] data = new byte[1024];
-                    while ((nRead = in.read(data, 0, data.length)) != -1) {
-                        buffer.write(data, 0, nRead);
-                    }
-
-                    buffer.flush();
-                    byte[] byteArray = buffer.toByteArray();
-
-                    String text = new String(byteArray, StandardCharsets.UTF_8);
-                    Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
+                    File database = getApplicationContext().getDatabasePath("database");
+                    FileOutputStream out = new FileOutputStream(database);
+                    IOUtils.copy(in,out);
+                    in.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
