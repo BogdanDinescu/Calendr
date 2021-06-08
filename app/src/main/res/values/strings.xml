@@ -16,4 +16,6 @@
     <string name="show_all">Show all</string>
     <string name="options">Options</string>
     <string name="delete_past">Delete past events</string>
+    <string name="export_data">Backup events</string>
+    <string name="import_data">Import events</string>
 </resources>
