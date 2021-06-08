@@ -28,6 +28,41 @@
                 app:highlightedDaysLabelsColor="@color/orange"
                 app:headerLabelColor="@color/white"
         />
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@color/black"
+                >
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/add_button"
+                        android:backgroundTint="@color/blue_300"
+                        android:textColor="@color/white"
+                        android:text="@string/create2"
+                        android:layout_marginHorizontal="4dp"
+                />
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/show_all"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/blue_300"
+                        android:id="@+id/btn_show_all"
+                        android:layout_marginHorizontal="4dp"
+                />
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/options"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/blue_300"
+                        android:id="@+id/btn_options"
+                        android:layout_marginHorizontal="4dp"
+                />
+        </LinearLayout>
+
         <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,15 +85,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/event_list"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
-        <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/add_button"
-                android:layout_gravity="center"
-                android:backgroundTint="@color/black"
-                android:layout_margin="2dp"
-                android:background="@drawable/add_circle"
         />
 </LinearLayout>
 </androidx.core.widget.NestedScrollView>

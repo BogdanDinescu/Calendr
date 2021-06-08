@@ -13,4 +13,7 @@
     <string name="select_date">Select date</string>
     <string name="ok">OK</string>
     <string name="no_event">No events on this date</string>
+    <string name="show_all">Show all</string>
+    <string name="options">Options</string>
+    <string name="delete_past">Delete past events</string>
 </resources>

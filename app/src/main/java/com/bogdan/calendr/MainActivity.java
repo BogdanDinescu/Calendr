@@ -3,6 +3,7 @@ package com.bogdan.calendr;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private RecyclerView eventListView;
-    private ImageView addButton;
+    private Button addButton;
+    private Button showAllButton;
+    private Button optionsButton;
     private ProgressBar loading;
     private TextView noEvent;
     public static AppDatabase db;
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
+        showAllButton = findViewById(R.id.btn_show_all);
+        optionsButton = findViewById(R.id.btn_options);
         loading = findViewById(R.id.loading);
         noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
@@ -41,21 +46,30 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
+        showAllButton.setOnClickListener(v -> showAllEvents());
+        optionsButton.setOnClickListener(v -> openOptionsActivity());
         setTodayDateAsSelected();
 
         db.eventDao().getAll().observeForever(events -> calendarView.setEvents(getEventDays(events)));
-
-        db.eventDao().getAll().observe(this, this::showEventsInList);
-
+        showAllEvents();
     }
 
     private void onDayClick(EventDay eventDay) {
         db.eventDao().getEventsByDay(eventDay.getCalendar()).observe(this, this::showEventsInList);
     }
 
+    private void showAllEvents() {
+        db.eventDao().getAll().observe(this, this::showEventsInList);
+    }
+
     private void openAddEventActivity() {
         Intent intent = new Intent(this, EditEventActivity.class);
         intent.putExtra("INTENT_EVENT", new Event(0,"",calendarView.getFirstSelectedDate(),EventType.ONE_DAY,EventColor.BLUE));
+        startActivity(intent);
+    }
+
+    private void openOptionsActivity() {
+        Intent intent = new Intent(this, OptionsActivity.class);
         startActivity(intent);
     }
 

@@ -19,4 +19,7 @@ public interface EventDao {
 
     @Delete
     void delete(Event event);
+
+    @Query("DELETE FROM event WHERE date < :day")
+    void deleteEventsBefore(Calendar day);
 }
