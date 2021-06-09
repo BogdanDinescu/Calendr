@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -55,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onDayClick(EventDay eventDay) {
-        db.eventDao().getEventsByDay(eventDay.getCalendar()).observe(this, this::showEventsInList);
+        Calendar daySelected = (Calendar) eventDay.getCalendar().clone();
+        eventDay.getCalendar().add(Calendar.DATE,1);
+        Calendar nextDay = eventDay.getCalendar();
+        db.eventDao().getEventsByRange(daySelected, nextDay).observe(this, this::showEventsInList);
     }
 
     private void showAllEvents() {
