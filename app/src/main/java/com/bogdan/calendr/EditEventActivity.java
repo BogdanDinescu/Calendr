@@ -52,6 +52,7 @@ public class EditEventActivity extends Activity {
         Intent intent = getIntent();
         eventFromIntent = (Event) intent.getExtras().get("INTENT_EVENT");
         date.setText(getString(R.string.date_format,eventFromIntent.getDate().get(Calendar.DATE),eventFromIntent.getDate().get(Calendar.MONTH) + 1,eventFromIntent.getDate().get(Calendar.YEAR)));
+        time.setText(getString(R.string.time_format,eventFromIntent.getDate().get(Calendar.HOUR_OF_DAY),eventFromIntent.getDate().get(Calendar.MINUTE)));
         textName.setText(eventFromIntent.getName());
         colorSelector.check(colorSelector.getChildAt(eventFromIntent.getColor().ordinal()).getId());
         typeSelector.check(typeSelector.getChildAt(eventFromIntent.getType().ordinal()).getId());
