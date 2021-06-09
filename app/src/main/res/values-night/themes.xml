@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Calendr" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_300</item>
-        <item name="colorPrimaryVariant">@color/blue_600</item>
+        <item name="colorPrimary">@color/blue_400</item>
+        <item name="colorPrimaryVariant">@color/blue_300</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange</item>
