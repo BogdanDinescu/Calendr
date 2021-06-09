@@ -23,7 +23,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/date"
-            android:hint="@string/date1"
+            android:hint="@string/date"
             android:inputType="date"
             android:autofillHints="@string/select_date"
             android:textColor="@color/white"
@@ -42,14 +42,65 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/blue_300"
     />
-    <RadioGroup
-            android:layout_width="match_parent"
+    <EditText
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:id="@+id/color_selector"
+            android:id="@+id/time"
+            android:hint="@string/time"
+            android:inputType="date"
+            android:autofillHints="@string/select_date"
+            android:textColor="@color/white"
+            android:textColorHint="@color/grey"
             app:layout_constraintTop_toBottomOf="@id/date"
             app:layout_constraintStart_toStartOf="parent"
+    />
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_time"
+            android:id="@+id/btn_time"
+            app:layout_constraintTop_toBottomOf="@id/btn_date"
+            app:layout_constraintStart_toEndOf="@id/date"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue_300"
+    />
+    <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/type_selector"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical">
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/one_day"
+        />
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/reminder"
+                android:id="@+id/time_radio"
+        />
+        <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="@string/birthday"
+        />
+    </RadioGroup>
+    <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/color_selector"
+            app:layout_constraintTop_toBottomOf="@id/type_selector"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:orientation="horizontal"
-            android:gravity="center"
             android:layout_margin="10dp">
         <RadioButton
                 android:layout_width="wrap_content"

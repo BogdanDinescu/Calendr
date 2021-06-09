@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void onDayClick(EventDay eventDay) {
         Calendar daySelected = (Calendar) eventDay.getCalendar().clone();
-        eventDay.getCalendar().add(Calendar.DATE,1);
-        Calendar nextDay = eventDay.getCalendar();
+        Calendar nextDay = (Calendar) eventDay.getCalendar().clone();
+        nextDay.add(Calendar.DATE,1);
         db.eventDao().getEventsByRange(daySelected, nextDay).observe(this, this::showEventsInList);
     }
 

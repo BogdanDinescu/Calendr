@@ -7,10 +7,11 @@
     <string name="create2">Create</string>
     <string name="cancel">Cancel</string>
     <string name="name">Name</string>
-    <string name="date1">Date begin</string>
-    <string name="date2">Date end</string>
-    <string name="date">%1$d / %2$d / %3$d</string>
+    <string name="date">Date</string>
+    <string name="date_format">%1$d / %2$d / %3$d</string>
+    <string name="time_format">%1$d : %2$d</string>
     <string name="select_date">Select date</string>
+    <string name="select_time">Select time</string>
     <string name="ok">OK</string>
     <string name="no_event">No events on this date</string>
     <string name="show_all">Show all</string>
@@ -18,4 +19,8 @@
     <string name="delete_past">Delete past events</string>
     <string name="export_data">Backup events</string>
     <string name="import_data">Import events</string>
+    <string name="one_day">One day</string>
+    <string name="reminder">Reminder</string>
+    <string name="birthday">Birthday</string>
+    <string name="time">Time</string>
 </resources>

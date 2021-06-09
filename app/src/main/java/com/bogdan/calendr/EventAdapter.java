@@ -57,7 +57,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         final Event item = events.get(position);
         holder.name.setText(item.getName());
         holder.name.setTextColor(ContextCompat.getColor(context,MainActivity.eventColorToColor(item.getColor())));
-        holder.date.setText(SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(item.getDate().getTime()));
+        String date_text = SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(item.getDate().getTime());
+        if (item.getType() == EventType.REMINDER)
+            date_text += " " + SimpleDateFormat.getTimeInstance(DateFormat.SHORT).format(item.getDate().getTime());
+        holder.date.setText(date_text);
         holder.edit.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), EditEventActivity.class);
             intent.putExtra("INTENT_EVENT", item);
