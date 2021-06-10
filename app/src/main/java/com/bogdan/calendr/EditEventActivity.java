@@ -151,7 +151,7 @@ public class EditEventActivity extends Activity {
                 public void run() {
                     MainActivity.db.eventDao().insert(event);
                     if (event.getType() == EventType.REMINDER)
-                        startAlert(event.getDate(),event.getName());
+                        startAlert(event);
                 }
             });
             finish();
@@ -160,17 +160,17 @@ public class EditEventActivity extends Activity {
         }
     }
 
-    private void startAlert(Calendar c, String name) {
+    private void startAlert(Event event) {
         Intent intent = new Intent(getApplicationContext(), Broadcast.class);
-        intent.putExtra("notification_title", name);
+        intent.putExtra("notification_title", event.getName());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 0, intent, 0);
+                this.getApplicationContext(), event.getUid(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, event.getDate().getTimeInMillis(), pendingIntent);
         } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, event.getDate().getTimeInMillis(), pendingIntent);
         }
     }
 }
