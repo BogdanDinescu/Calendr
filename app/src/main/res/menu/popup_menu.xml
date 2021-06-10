@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/btn_agenda"
+            android:title="@string/agenda"/>
+    <item
+            android:id="@+id/btn_show_all"
+            android:title="@string/show_all"/>
+    <item
+            android:id="@+id/btn_options"
+            android:title="@string/options"/>
+</menu>

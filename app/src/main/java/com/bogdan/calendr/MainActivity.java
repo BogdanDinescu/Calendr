@@ -5,10 +5,9 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -25,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private RecyclerView eventListView;
     private Button addButton;
-    private Button showAllButton;
-    private Button optionsButton;
+    private Button moreButton;
     private ProgressBar loading;
     private TextView noEvent;
     public static AppDatabase db;
@@ -40,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
-        showAllButton = findViewById(R.id.btn_show_all);
-        optionsButton = findViewById(R.id.btn_options);
+        moreButton = findViewById(R.id.btn_more);
         loading = findViewById(R.id.loading);
         noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
@@ -51,12 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
-        showAllButton.setOnClickListener(v -> showAllEvents());
-        optionsButton.setOnClickListener(v -> openOptionsActivity());
+        moreButton.setOnClickListener(v -> moreClick());
         setTodayDateAsSelected();
 
         db.eventDao().getAll().observeForever(events -> calendarView.setEvents(getEventDays(events)));
-        showAllEvents();
+        showAgenda();
     }
 
     private void onDayClick(EventDay eventDay) {
@@ -70,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
         db.eventDao().getAll().observe(this, this::showEventsInList);
     }
 
+    private void showAgenda() {
+        Calendar c = Calendar.getInstance();
+        db.eventDao().getAllAfter(c).observe(this, this::showEventsInList);
+    }
+
     private void openAddEventActivity() {
         Intent intent = new Intent(this, EditEventActivity.class);
         intent.putExtra("INTENT_EVENT", new Event(0,"",calendarView.getFirstSelectedDate(),EventType.ONE_DAY,EventColor.BLUE));
@@ -79,6 +80,30 @@ public class MainActivity extends AppCompatActivity {
     private void openOptionsActivity() {
         Intent intent = new Intent(this, OptionsActivity.class);
         startActivity(intent);
+    }
+
+    private void moreClick() {
+        PopupMenu popupMenu = new PopupMenu(this, moreButton);
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getTitle().toString()) {
+                    case "Agenda":
+                        showAgenda();
+                        break;
+                    case "Show all":
+                        showAllEvents();
+                        break;
+                    case "Options":
+                        openOptionsActivity();
+                        break;
+                }
+                return true;
+            }
+        });
+        popupMenu.show();
     }
 
     private void showEventsInList(List<Event> eventList) {
