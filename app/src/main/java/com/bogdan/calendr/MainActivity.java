@@ -1,6 +1,9 @@
 package com.bogdan.calendr;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         loading = findViewById(R.id.loading);
         noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
+
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, AppDatabase.name).setJournalMode(RoomDatabase.JournalMode.TRUNCATE).build();
+        createNotificationChannel();
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
@@ -105,4 +110,19 @@ public class MainActivity extends AppCompatActivity {
         int[] colors = {R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue_300, R.color.purple};
         return colors[eventColor.ordinal()];
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationChannel channel = new NotificationChannel(
+                    "Reminder",
+                    getString(R.string.reminder),
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(getString(R.string.reminder_text));
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 }

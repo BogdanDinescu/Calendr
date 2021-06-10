@@ -1,9 +1,8 @@
 package com.bogdan.calendr;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.app.*;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -46,7 +45,7 @@ public class EditEventActivity extends Activity {
         btn_date.setOnClickListener(v -> datePickerDialog(date));
         btn_time.setOnClickListener(v -> timePickerDialog(time));
         btn_cancel.setOnClickListener(v -> finish());
-        btn_ok.setOnClickListener(v -> finishWithOk());
+        btn_ok.setOnClickListener(v -> finishAndInsert());
         typeSelector.setOnCheckedChangeListener(this::typeChange);
 
         Intent intent = getIntent();
@@ -143,7 +142,7 @@ public class EditEventActivity extends Activity {
         }
     }
 
-    private void finishWithOk() {
+    private void finishAndInsert() {
         try {
             Event event = eventFromForm();
             Executor executor = Executors.newSingleThreadExecutor();
@@ -151,11 +150,27 @@ public class EditEventActivity extends Activity {
                 @Override
                 public void run() {
                     MainActivity.db.eventDao().insert(event);
+                    if (event.getType() == EventType.REMINDER)
+                        startAlert(event.getDate(),event.getName());
                 }
             });
             finish();
         } catch (RuntimeException e) {
             Toast.makeText(this,"Fields not completed correctly",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void startAlert(Calendar c, String name) {
+        Intent intent = new Intent(getApplicationContext(), Broadcast.class);
+        intent.putExtra("notification_title", name);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                this.getApplicationContext(), 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
         }
     }
 }
