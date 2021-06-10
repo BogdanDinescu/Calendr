@@ -6,20 +6,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="@color/black"
         tools:context=".OptionsActivity">
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/options"
-            android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:layout_marginVertical="50dp"
     />
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:text="@string/delete_past"
             android:id="@+id/btn_delete_past"
             android:backgroundTint="@color/red"
@@ -27,19 +24,17 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:text="@string/export_data"
             android:id="@+id/btn_export"
-            android:backgroundTint="@color/blue_300"
+            android:backgroundTint="?android:statusBarColor"
             android:layout_marginVertical="10dp"
     />
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:text="@string/import_data"
             android:id="@+id/btn_import"
-            android:backgroundTint="@color/blue_300"
+            android:backgroundTint="?android:statusBarColor"
     />
 
 </LinearLayout>

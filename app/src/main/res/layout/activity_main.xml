@@ -5,8 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_grey">
+        android:layout_height="match_parent">
 <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,29 +16,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/calendarView"
-                app:pagesColor="@color/black"
-                app:headerColor="@color/blue_300"
-                app:daysLabelsColor="@color/white"
-                app:disabledDaysLabelsColor="@color/grey"
-                app:abbreviationsBarColor="@color/blue_300"
-                app:abbreviationsLabelsColor="@color/white"
-                app:todayLabelColor="@color/orange"
+                app:pagesColor="?android:colorBackground"
+                app:headerColor="?android:statusBarColor"
+                app:abbreviationsBarColor="?android:statusBarColor"
+                app:daysLabelsColor="?android:textColor"
+                app:todayLabelColor="?android:colorAccent"
                 app:anotherMonthsDaysLabelsColor="@color/grey"
-                app:highlightedDaysLabelsColor="@color/orange"
-                app:headerLabelColor="@color/white"
         />
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@color/black"
                 >
                 <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/add_button"
-                        android:backgroundTint="@color/blue_300"
-                        android:textColor="@color/white"
+                        android:backgroundTint="?android:statusBarColor"
                         android:text="@string/create2"
                         android:layout_marginHorizontal="4dp"
                 />
@@ -47,8 +40,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_more"
-                        android:backgroundTint="@color/blue_300"
-                        android:textColor="@color/white"
+                        android:backgroundTint="?android:statusBarColor"
                         android:text="@string/options"
                         android:layout_marginHorizontal="4dp"
                 />
@@ -65,7 +57,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/white"
                 android:id="@+id/no_event_text"
                 android:text="@string/no_event"
                 android:visibility="gone"

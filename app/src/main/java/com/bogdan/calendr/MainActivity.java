@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAgenda() {
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY,0);
+        c.set(Calendar.MINUTE,0);
+        c.set(Calendar.SECOND,0);
+        c.set(Calendar.MILLISECOND,0);
+        Toast.makeText(this,c.getTime().toString(),Toast.LENGTH_SHORT).show();
         db.eventDao().getAllEventsAfter(c).observe(this, this::showEventsInList);
     }
 

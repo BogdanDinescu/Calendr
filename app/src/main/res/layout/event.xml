@@ -5,8 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
-        android:layout_margin="5dp"
-        app:cardBackgroundColor="@color/black">
+        android:layout_margin="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -18,7 +17,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/event_holder_name"
                 android:text="Titlu eveniment"
-                android:textColor="@color/white"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +24,6 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
                 android:id="@+id/event_holder_date"
                 android:text="10/07/2021"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -43,7 +40,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/edit"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/grey"
                     android:id="@+id/btn_edit"
                     android:layout_marginHorizontal="4dp"
             />
