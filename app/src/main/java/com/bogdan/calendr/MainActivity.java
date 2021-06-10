@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -18,6 +19,8 @@ import com.applandeo.materialcalendarview.EventDay;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,7 +62,18 @@ public class MainActivity extends AppCompatActivity {
         Calendar daySelected = (Calendar) eventDay.getCalendar().clone();
         Calendar nextDay = (Calendar) eventDay.getCalendar().clone();
         nextDay.add(Calendar.DATE,1);
-        db.eventDao().getEventsByRange(daySelected, nextDay).observe(this, this::showEventsInList);
+        db.eventDao().getEventsByRangeOrType(daySelected, nextDay, EventType.BIRTHDAY, previousYears(daySelected)).observe(this, this::showEventsInList);
+    }
+
+    private List<Calendar> previousYears(Calendar c) {
+        int year = c.get(Calendar.YEAR);
+        List<Calendar> result = new ArrayList<>();
+        for (int i = year - 1; i > year - 100; i--) {
+            Calendar copy = (Calendar) c.clone();
+            copy.set(Calendar.YEAR, i);
+            result.add(copy);
+        }
+        return result;
     }
 
     private void showAllEvents() {
@@ -68,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAgenda() {
         Calendar c = Calendar.getInstance();
-        db.eventDao().getAllAfter(c).observe(this, this::showEventsInList);
+        db.eventDao().getAllEventsAfter(c).observe(this, this::showEventsInList);
     }
 
     private void openAddEventActivity() {
@@ -126,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
     private List<EventDay> getEventDays(List<Event> events) {
         List<EventDay> result = new ArrayList<>();
         for(Event event:events) {
+            if (event.getType() == EventType.BIRTHDAY) {
+                event.getDate().set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+            }
             result.add(new EventDay(event.getDate(), eventColorToColor(event.getColor())));
         }
         return result;

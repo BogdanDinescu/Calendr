@@ -12,10 +12,10 @@ public interface EventDao {
     LiveData<List<Event>> getAll();
 
     @Query("SELECT * FROM event WHERE date >= :date ORDER BY date")
-    LiveData<List<Event>> getAllAfter(Calendar date);
+    LiveData<List<Event>> getAllEventsAfter(Calendar date);
 
-    @Query("SELECT * FROM event WHERE date >= :startDay AND date < :endDay")
-    LiveData<List<Event>> getEventsByRange(Calendar startDay, Calendar endDay);
+    @Query("SELECT * FROM event WHERE (date >= :startDay AND date < :endDay) OR (type = :type AND date in (:dates))")
+    LiveData<List<Event>> getEventsByRangeOrType(Calendar startDay, Calendar endDay, EventType type, List<Calendar> dates);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Event event);
