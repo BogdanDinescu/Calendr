@@ -24,6 +24,9 @@
         <activity
                 android:name=".OptionsActivity">
         </activity>
+        <receiver
+                android:process=":remote"
+                android:name=".Broadcast"
+        />
     </application>
-
 </manifest>
