@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         c.set(Calendar.MINUTE,0);
         c.set(Calendar.SECOND,0);
         c.set(Calendar.MILLISECOND,0);
-        Toast.makeText(this,c.getTime().toString(),Toast.LENGTH_SHORT).show();
         db.eventDao().getAllEventsAfter(c).observe(this, this::showEventsInList);
     }
 
