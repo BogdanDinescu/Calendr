@@ -4,6 +4,8 @@ import android.app.*;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.Nullable;
@@ -149,9 +151,12 @@ public class EditEventActivity extends Activity {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    MainActivity.db.eventDao().insert(event);
-                    if (event.getType() == EventType.REMINDER)
+                    int id = (int) MainActivity.db.eventDao().insert(event);
+                    if (event.getType() == EventType.REMINDER) {
+                        event.setUid(id);
+                        System.out.println(String.valueOf(event.getUid()));
                         startAlert(event);
+                    }
                 }
             });
             finish();
@@ -164,7 +169,7 @@ public class EditEventActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), Broadcast.class);
         intent.putExtra("notification_title", event.getName());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), event.getUid(), intent, 0);
+                getApplicationContext(), event.getUid(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

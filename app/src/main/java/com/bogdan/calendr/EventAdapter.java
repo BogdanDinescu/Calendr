@@ -1,5 +1,7 @@
 package com.bogdan.calendr;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -77,11 +79,22 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
                                 @Override
                                 public void run() {
                                     db.eventDao().delete(item);
+                                    if (item.getType() == EventType.REMINDER) {
+                                        cancelAlert(item, v.getContext());
+                                    }
                                 }
                             });
                         }})
                     .setNegativeButton("Cancel", null).show();
         });
+    }
+
+    private void cancelAlert(Event event, Context context) {
+        Intent intent = new Intent(context.getApplicationContext(), Broadcast.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                context.getApplicationContext(), event.getUid(), intent, 0);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 
     @Override

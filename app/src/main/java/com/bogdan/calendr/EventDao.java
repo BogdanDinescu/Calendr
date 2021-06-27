@@ -18,7 +18,7 @@ public interface EventDao {
     LiveData<List<Event>> getEventsByRangeOrType(Calendar startDay, Calendar endDay, EventType type, List<Calendar> dates);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Event event);
+    long insert(Event event);
 
     @Delete
     void delete(Event event);
