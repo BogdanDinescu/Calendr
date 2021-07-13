@@ -5,18 +5,21 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private RecyclerView eventListView;
-    private Button addButton;
-    private Button moreButton;
+    private FloatingActionButton addButton;
     private ProgressBar loading;
     private TextView noEvent;
     public static AppDatabase db;
@@ -35,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Calendr);
+        getSupportActionBar().setElevation(0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         calendarView = findViewById(R.id.calendarView);
         eventListView = findViewById(R.id.event_list);
         addButton = findViewById(R.id.add_button);
-        moreButton = findViewById(R.id.btn_more);
         loading = findViewById(R.id.loading);
         noEvent = findViewById(R.id.no_event_text);
         loading.setVisibility(View.VISIBLE);
@@ -51,11 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         calendarView.setOnDayClickListener(this::onDayClick);
         addButton.setOnClickListener(v -> openAddEventActivity());
-        moreButton.setOnClickListener(v -> moreClick());
         setTodayDateAsSelected();
 
         db.eventDao().getAll().observeForever(events -> calendarView.setEvents(getEventDays(events)));
         showAgenda();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.popup_menu, menu);
+        return true;
     }
 
     private void onDayClick(EventDay eventDay) {
@@ -100,28 +107,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void moreClick() {
-        PopupMenu popupMenu = new PopupMenu(this, moreButton);
-        popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getTitle().toString()) {
-                    case "Agenda":
-                        showAgenda();
-                        break;
-                    case "Show all":
-                        showAllEvents();
-                        break;
-                    case "Options":
-                        openOptionsActivity();
-                        break;
-                }
-                return true;
-            }
-        });
-        popupMenu.show();
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getTitle().toString()) {
+            case "Agenda":
+                showAgenda();
+                break;
+            case "Show all":
+                showAllEvents();
+                break;
+            case "Options":
+                openOptionsActivity();
+                break;
+        }
+        return true;
     }
 
     private void showEventsInList(List<Event> eventList) {

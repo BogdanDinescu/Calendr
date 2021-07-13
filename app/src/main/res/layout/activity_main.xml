@@ -1,72 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.core.widget.NestedScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
-
-        <com.applandeo.materialcalendarview.CalendarView
+        android:layout_height="match_parent"
+>
+        <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/calendarView"
-                app:pagesColor="?android:colorBackground"
-                app:headerColor="?android:statusBarColor"
-                app:abbreviationsBarColor="?android:statusBarColor"
-                app:daysLabelsColor="?android:textColor"
-                app:todayLabelColor="?android:colorAccent"
-                app:anotherMonthsDaysLabelsColor="@color/grey"
-        />
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <Button
-                        android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/add_button"
-                        android:backgroundTint="?android:statusBarColor"
-                        android:text="@string/create2"
-                        android:layout_marginHorizontal="4dp"
-                />
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_more"
-                        android:backgroundTint="?android:statusBarColor"
-                        android:text="@string/options"
-                        android:layout_marginHorizontal="4dp"
-                />
-        </LinearLayout>
+                        android:orientation="vertical"
+                        tools:context=".MainActivity">
 
-        <ProgressBar
+                        <com.applandeo.materialcalendarview.CalendarView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/calendarView"
+                                app:pagesColor="?android:colorBackground"
+                                app:headerColor="?android:statusBarColor"
+                                app:abbreviationsBarColor="?android:statusBarColor"
+                                app:daysLabelsColor="?android:textColor"
+                                app:todayLabelColor="?android:colorAccent"
+                                app:anotherMonthsDaysLabelsColor="@color/grey"
+                        />
+
+                        <ProgressBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:id="@+id/loading"
+                                android:layout_margin="5dp"
+                        />
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:id="@+id/no_event_text"
+                                android:text="@string/no_event"
+                                android:visibility="gone"
+                                android:layout_margin="10dp"
+                        />
+                        <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/event_list"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        />
+                </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/loading"
-                android:layout_margin="5dp"
-        />
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:id="@+id/no_event_text"
-                android:text="@string/no_event"
-                android:visibility="gone"
-                android:layout_margin="10dp"
-        />
-        <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/event_list"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
-</LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/add_circle"
+                android:contentDescription="@string/create"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
