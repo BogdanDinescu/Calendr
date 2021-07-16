@@ -1,139 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="30dp"
         android:fitsSystemWindows="true">
-
-    <EditText
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create"
+            android:paddingVertical="20dp"
+            android:layout_gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+    />
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/event_name"
-            android:hint="@string/name"
-            android:autofillHints="@string/name"
-            android:inputType="text"
-    />
-    <EditText
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/date"
-            android:hint="@string/date"
-            android:inputType="date"
-            android:autofillHints="@string/select_date"
-            app:layout_constraintTop_toBottomOf="@id/event_name"
-            app:layout_constraintStart_toStartOf="parent"
-    />
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_date"
-            android:id="@+id/btn_date"
-            app:layout_constraintTop_toBottomOf="@id/event_name"
-            app:layout_constraintStart_toEndOf="@id/date"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="?android:statusBarColor"
-    />
-    <EditText
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/time"
-            android:hint="@string/time"
-            android:inputType="date"
-            android:autofillHints="@string/select_date"
-            app:layout_constraintTop_toBottomOf="@id/date"
-            app:layout_constraintStart_toStartOf="parent"
-    />
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/select_time"
-            android:id="@+id/btn_time"
-            app:layout_constraintTop_toBottomOf="@id/btn_date"
-            app:layout_constraintStart_toEndOf="@id/date"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="?android:statusBarColor"
-    />
-    <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/type_selector"
-            app:layout_constraintTop_toBottomOf="@id/time"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="vertical">
-        <RadioButton
+            android:padding="30dp"
+            android:fitsSystemWindows="true">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/event_name"
+                android:hint="@string/name"
+                android:autofillHints="@string/name"
+                android:inputType="text"
+        />
+        <EditText
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/date"
+                android:hint="@string/date"
+                android:inputType="date"
+                android:autofillHints="@string/select_date"
+                app:layout_constraintTop_toBottomOf="@id/event_name"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+        <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/one_day"
+                android:text="@string/select_date"
+                android:id="@+id/btn_date"
+                app:layout_constraintTop_toBottomOf="@id/event_name"
+                app:layout_constraintStart_toEndOf="@id/date"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="?android:statusBarColor"
         />
-        <RadioButton
+        <EditText
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/time"
+                android:hint="@string/time"
+                android:inputType="date"
+                android:autofillHints="@string/select_date"
+                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+        <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/reminder"
-                android:id="@+id/time_radio"
+                android:text="@string/select_time"
+                android:id="@+id/btn_time"
+                app:layout_constraintTop_toBottomOf="@id/btn_date"
+                app:layout_constraintStart_toEndOf="@id/date"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:backgroundTint="?android:statusBarColor"
         />
-        <RadioButton
+        <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/birthday"
-        />
-    </RadioGroup>
-    <RadioGroup
-            android:layout_width="wrap_content"
+                android:id="@+id/type_selector"
+                app:layout_constraintTop_toBottomOf="@id/time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical">
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/one_day"
+            />
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reminder"
+                    android:id="@+id/time_radio"
+            />
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/birthday"
+            />
+        </RadioGroup>
+        <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/color_selector"
+                app:layout_constraintTop_toBottomOf="@id/type_selector"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:layout_margin="10dp">
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/red"/>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/orange"/>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/yellow"/>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/green"/>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/blue_300"/>
+            <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple"/>
+        </RadioGroup>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/color_selector"
-            app:layout_constraintTop_toBottomOf="@id/type_selector"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:orientation="horizontal"
-            android:layout_margin="10dp">
-        <RadioButton
+            android:gravity="end">
+        <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/red"/>
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/orange"/>
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/yellow"/>
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/green"/>
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/blue_300"/>
-        <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/purple"/>
-    </RadioGroup>
+                android:id="@+id/cancel_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                android:text="@string/cancel"
 
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:id="@+id/cancel_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:backgroundTint="?android:statusBarColor"
-    />
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ok"
-            android:id="@+id/ok_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:backgroundTint="?android:statusBarColor"
-    />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ok_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+                android:text="@string/ok"
+        />
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>
