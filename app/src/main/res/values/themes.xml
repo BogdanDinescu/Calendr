@@ -4,7 +4,6 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_300</item>
         <item name="colorPrimaryVariant">@color/blue_300</item>
-        <item name="colorPrimaryDark">@color/blue_300</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange</item>
@@ -13,8 +12,13 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:textColor">@color/black</item>
+        <!-- Action bar style. -->
+        <item name="actionBarStyle">@style/ActionBarTheme</item>
     </style>
     <style name="Theme.Launcher" parent="Theme.Calendr">
         <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+    <style name="ActionBarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">?attr/colorPrimaryVariant</item>
     </style>
 </resources>
