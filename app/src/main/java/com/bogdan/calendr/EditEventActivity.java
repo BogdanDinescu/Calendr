@@ -168,13 +168,13 @@ public class EditEventActivity extends Activity {
     private void startAlert(Event event) {
         Intent intent = new Intent(getApplicationContext(), Broadcast.class);
         intent.putExtra("notification_title", event.getName());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                getApplicationContext(), event.getUid(), intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
+        PendingIntent pendingIntent;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), event.getUid(), intent, PendingIntent.FLAG_IMMUTABLE);
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, event.getDate().getTimeInMillis(), pendingIntent);
         } else {
+            pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), event.getUid(), intent, 0);
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, event.getDate().getTimeInMillis(), pendingIntent);
         }
     }

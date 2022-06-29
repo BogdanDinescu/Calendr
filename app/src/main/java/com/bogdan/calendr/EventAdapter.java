@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,8 +92,12 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
 
     private void cancelAlert(Event event, Context context) {
         Intent intent = new Intent(context.getApplicationContext(), Broadcast.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context.getApplicationContext(), event.getUid(), intent, 0);
+        PendingIntent pendingIntent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), event.getUid(), intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), event.getUid(), intent, 0);
+        }
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
