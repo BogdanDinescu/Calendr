@@ -15,13 +15,16 @@ public class Event implements Parcelable {
     private Calendar date;
     private EventType type;
     private EventColor color;
+    // only for BIRTHDAY type
+    private boolean considerYear;
 
-    public Event(int uid, String name, Calendar date, EventType type, EventColor color) {
+    public Event(int uid, String name, Calendar date, EventType type, EventColor color, boolean considerYear) {
         this.uid = uid;
         this.name = name;
         this.date = date;
         this.type = type;
         this.color = color;
+        this.considerYear = considerYear;
     }
 
     protected Event(Parcel in) {
@@ -32,6 +35,7 @@ public class Event implements Parcelable {
         date = c1;
         type = (EventType) in.readSerializable();
         color = (EventColor) in.readSerializable();
+        considerYear = in.readByte() != 0;
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
@@ -86,6 +90,14 @@ public class Event implements Parcelable {
         this.color = color;
     }
 
+    public boolean getConsiderYear() {
+        return considerYear;
+    }
+
+    public void setConsiderYear(boolean considerYear) {
+        this.considerYear = considerYear;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -98,5 +110,6 @@ public class Event implements Parcelable {
         dest.writeLong(date.getTimeInMillis());
         dest.writeSerializable(type);
         dest.writeSerializable(color);
+        dest.writeByte((byte) (considerYear ? 1 : 0));
     }
 }

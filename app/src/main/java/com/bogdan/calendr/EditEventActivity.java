@@ -25,6 +25,7 @@ public class EditEventActivity extends Activity {
     private Button btn_time;
     private EditText date;
     private EditText time;
+    private CheckBox checkYear;
     private RadioGroup colorSelector;
     private RadioGroup typeSelector;
     private Event eventFromIntent;
@@ -41,6 +42,7 @@ public class EditEventActivity extends Activity {
         btn_time = findViewById(R.id.btn_time);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
+        checkYear = findViewById(R.id.check_year);
         colorSelector = findViewById(R.id.color_selector);
         typeSelector = findViewById(R.id.type_selector);
 
@@ -57,6 +59,7 @@ public class EditEventActivity extends Activity {
         textName.setText(eventFromIntent.getName());
         colorSelector.check(colorSelector.getChildAt(eventFromIntent.getColor().ordinal()).getId());
         typeSelector.check(typeSelector.getChildAt(eventFromIntent.getType().ordinal()).getId());
+        checkYear.setChecked(eventFromIntent.getConsiderYear());
     }
 
     private void datePickerDialog(EditText editText) {
@@ -121,7 +124,8 @@ public class EditEventActivity extends Activity {
                 textName.getText().toString(),
                 c,
                 EventType.values()[RadioGroupToCheckedPosition(typeSelector)],
-                EventColor.values()[RadioGroupToCheckedPosition(colorSelector)]);
+                EventColor.values()[RadioGroupToCheckedPosition(colorSelector)],
+                typeSelector.getCheckedRadioButtonId() == R.id.birthday_radio && checkYear.isChecked());
     }
 
     private int RadioGroupToCheckedPosition(RadioGroup radioGroup) {
@@ -132,6 +136,7 @@ public class EditEventActivity extends Activity {
 
     private void typeChange(RadioGroup group, int checkedId) {
         timeShow(checkedId == R.id.time_radio);
+        checkYearShow(checkedId == R.id.birthday_radio);
     }
 
     private void timeShow(boolean show) {
@@ -141,6 +146,14 @@ public class EditEventActivity extends Activity {
         } else {
             time.setVisibility(View.GONE);
             btn_time.setVisibility(View.GONE);
+        }
+    }
+
+    private void checkYearShow(boolean show) {
+        if (show) {
+            checkYear.setVisibility(View.VISIBLE);
+        } else {
+            checkYear.setVisibility(View.GONE);
         }
     }
 

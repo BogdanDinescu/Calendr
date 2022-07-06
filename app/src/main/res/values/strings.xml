@@ -24,4 +24,5 @@
     <string name="birthday">Birthday</string>
     <string name="time">Time</string>
     <string name="reminder_text">Reminders set in the app</string>
+    <string name="check_year">Take year into consideration</string>
 </resources>

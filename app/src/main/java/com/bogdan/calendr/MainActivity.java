@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openAddEventActivity() {
         Intent intent = new Intent(this, EditEventActivity.class);
-        intent.putExtra("INTENT_EVENT", new Event(0,"",calendarView.getFirstSelectedDate(),EventType.ONE_DAY,EventColor.BLUE));
+        intent.putExtra("INTENT_EVENT", new Event(0,"",calendarView.getFirstSelectedDate(),EventType.ONE_DAY,EventColor.BLUE, false));
         startActivity(intent);
     }
 
