@@ -81,8 +81,10 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.eventHolder>
         StringBuilder dateText = new StringBuilder();
         if (item.getType() == EventType.ONE_DAY || item.getType() == EventType.REMINDER) {
             dateText.append(SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(item.getDate().getTime()));
-            if (item.getType() == EventType.REMINDER)
+            if (item.getType() == EventType.REMINDER) {
+                dateText.append(" ");
                 dateText.append(SimpleDateFormat.getTimeInstance(DateFormat.SHORT).format(item.getDate().getTime()));
+            }
         }
         if (item.getType() == EventType.BIRTHDAY) {
             if (item.getConsiderYear()) {
